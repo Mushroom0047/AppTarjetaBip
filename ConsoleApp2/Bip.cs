@@ -32,10 +32,10 @@ namespace ConsoleApp2 {
                 return false;
             }            
         }
-        public Boolean pagar() {            
-            if (saldo >= CalcularPasaje()) {                
-                saldo -= CalcularPasaje();
-                AgregarPagos(CalcularPasaje());
+        public Boolean pagar() {
+            if (saldo >= Utilidades.CalculoValorPasaje()) {
+                saldo -= Utilidades.CalculoValorPasaje();
+                AgregarPagos(Utilidades.CalculoValorPasaje());
                 return true;
             } else {
                 return false;
@@ -68,22 +68,6 @@ namespace ConsoleApp2 {
             }
         }
 
-        //Metodo para calcular pasaje
-        private int CalcularPasaje() {
-            Int32 hora_actual =  DateTime.Now.Hour;
-            int pasaje = -1;
 
-            //Horario bajo
-            if (hora_actual >= 6 && hora_actual < 9 || hora_actual >= 21 && hora_actual < 23) {
-                pasaje = Utilidades.VALOR_PASAJE[0];
-            //Horario valle
-            }else if (hora_actual > 9  && hora_actual <18) {
-                pasaje = Utilidades.VALOR_PASAJE[1];
-            //Horario punta
-            } else if(hora_actual >= 18 && hora_actual < 21) {
-                pasaje = Utilidades.VALOR_PASAJE[2];
-            }          
-            return pasaje;
-        }
     }   
 }

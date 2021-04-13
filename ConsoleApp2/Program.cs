@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 namespace ConsoleApp2 {
     class Program {
         static void Main(string[] args) {
-            //Creamos un par de tarjetas
-            Bip a = new Bip();
+            //Creamos un par de tarjetas          
             Bip b = new Bip();
 
             //Opciones para la consola
             int opcion = -1;
             int recarga = -1;
             
-
+            //Console.WriteLine(Utilidades.CalculoValorPasaje());
             //Mostramos el bucle de consulta
             while (opcion != 0) {
                 Console.WriteLine("---------------------------------------------------");
