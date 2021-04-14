@@ -6,23 +6,48 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp2 {
     class Program {
-        static void Main(string[] args) {
-            //Creamos un par de tarjetas          
-            Bip b = new Bip();
+        private static List<Bip> tarjetas = new List<Bip>();
 
+
+        static void Main(string[] args) {
             //Opciones para la consola
             int opcion = -1;
             int recarga = -1;
-            
+            Bip b = new Bip();
+
             //Console.WriteLine(Utilidades.CalculoValorPasaje());
             //Mostramos el bucle de consulta
-            while (opcion != 0) {
+            while (opcion != 0) {               
                 Console.WriteLine("---------------------------------------------------");
                 Console.WriteLine("Bienvenido a Bip");
+                //if (tarjetas.Count == 0) {
+                //    Console.WriteLine("No dispone de tarjetas \n ¿Desea crear una ahora?");
+                //    Console.WriteLine("1: Si \n 2: No");
+                //    opcion = int.Parse(Console.ReadLine());
+                //    switch (opcion) {
+                //        case 1:
+                //            Bip nuevaBip = new Bip();
+                //            Console.WriteLine("Tarjeta creada correctamente");
+                //            break;
+                //        case 2:
+                //            opcion = 0;
+                //            break;
+                //    }
+                //} else {
+                //    Console.WriteLine("Por favor eliga una tarjeta para continuar");
+                //    foreach (Bip i in tarjetas) {
+                //        Console.WriteLine("Tarjeta: {0} - Id: {1}",i , i.Id);
+                //    }
+                //}
                 Console.WriteLine("Que acción quiere realizar \n");
                 Console.WriteLine(" 1: Cosulta saldo \n 2: Recargar \n 3: Pagar pasaje " +
                     "\n 4: Ver id de tarjeta \n 5: Listado de cargas \n 6: Listado de pagos \n 0: Salir");
-                opcion = int.Parse(Console.ReadLine());
+                try {
+                    opcion = int.Parse(Console.ReadLine());
+                } catch (System.FormatException) {
+                    opcion = -1;
+                }
+                
 
                 switch (opcion) {
                     case 0:
@@ -34,14 +59,20 @@ namespace ConsoleApp2 {
                         break;
                     case 2:
                         Console.Write("Ingrese el monto que desea cargar $");
-                        recarga = int.Parse(Console.ReadLine());
-
-                        if (recarga != -1) {
+                        try {
+                            recarga = int.Parse(Console.ReadLine());
+                        }catch (System.FormatException) {
+                            recarga = -1;
+                        }
+                        
+                        if (recarga > 0) {
                             if (b.cargar(recarga)) {
                                 Console.WriteLine("\n Recarga exitosa, Su nuevo saldo es $" + b.Saldo);
                             } else {
                                 Console.WriteLine("Monto ingresado no es valido");
                             }
+                        } else {
+                            Console.WriteLine("Monto ingresado no valido");
                         }
                         break;
                     case 3:

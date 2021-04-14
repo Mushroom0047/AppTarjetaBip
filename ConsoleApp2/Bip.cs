@@ -43,9 +43,10 @@ namespace ConsoleApp2 {
         }
 
         public Bip() {
-            idd++;
+            idd = Utilidades.GenerarId();
             creacion = DateTime.Now;
         }
+       
 
         //Metodo para agregar pagos
         private void AgregarPagos(int pago) {
