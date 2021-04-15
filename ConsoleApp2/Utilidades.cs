@@ -63,6 +63,7 @@ namespace ConsoleApp2 {
             return idGen;
         }
 
+
         public static String ConsultaTarjetas() {
             String res = null;
             foreach (Bip b in tarjetas) {
@@ -73,7 +74,7 @@ namespace ConsoleApp2 {
         }
 
         public static Bip ElegirTarjeta(int i) {
-            return tarjetas[i - 1];
+            return tarjetas[i];
         }
     }
 }
