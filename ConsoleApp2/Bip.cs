@@ -52,23 +52,22 @@ namespace ConsoleApp2 {
         private void AgregarPagos(int pago) {
             DateTime fechaHoy = DateTime.Now;
             String strPago;
-            if (pagos.Capacity < 10) {
-                strPago = $"Fecha: {fechaHoy.ToShortDateString()}- Hora: {fechaHoy.ToShortTimeString()} - Pago: ${pago}";
+            strPago = $"Fecha: {fechaHoy.ToShortDateString()}- Hora: {fechaHoy.ToShortTimeString()} - Pago: ${pago}";
+            if (pagos.Count() < 10) {
                 pagos.Add(strPago);
             } else {
-                strPago = $"Fecha: {fechaHoy.ToShortDateString()}- Hora: {fechaHoy.ToShortTimeString()} - Pago: ${pago}";
                 pagos.RemoveAt(0);
                 pagos.Add(strPago);
-            }     
+            }                         
         }
 
-        public void MostrarPagos() {
-            foreach (String pago in pagos) {
-                Console.WriteLine(pago);
-                Console.WriteLine(pagos.Capacity);
+        public String MostrarPagos() {
+            String cadena = null;
+            Console.WriteLine("Total de pagos: {0}", pagos.Count());
+            foreach (String i in pagos) {
+                cadena += i+"\n";
             }
+            return cadena;
         }
-
-
     }   
 }

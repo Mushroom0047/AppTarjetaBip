@@ -6,39 +6,61 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp2 {
     class Program {
-        private static List<Bip> tarjetas = new List<Bip>();
-
 
         static void Main(string[] args) {
             //Opciones para la consola
             int opcion = -1;
             int recarga = -1;
-            Bip b = new Bip();
+            int opcTarjeta = -1;
+            int eleccionTarjeta = -1;
+            
+            //Tarjeta por defecto
+            Bip b = Utilidades.CrearTarjeta();
 
-            //Console.WriteLine(Utilidades.CalculoValorPasaje());
-            //Mostramos el bucle de consulta
-            while (opcion != 0) {               
+            //Elegir o crear tarjeta
+            while (opcTarjeta != 0) {
                 Console.WriteLine("---------------------------------------------------");
                 Console.WriteLine("Bienvenido a Bip");
-                //if (tarjetas.Count == 0) {
-                //    Console.WriteLine("No dispone de tarjetas \n ¿Desea crear una ahora?");
-                //    Console.WriteLine("1: Si \n 2: No");
-                //    opcion = int.Parse(Console.ReadLine());
-                //    switch (opcion) {
-                //        case 1:
-                //            Bip nuevaBip = new Bip();
-                //            Console.WriteLine("Tarjeta creada correctamente");
-                //            break;
-                //        case 2:
-                //            opcion = 0;
-                //            break;
-                //    }
-                //} else {
-                //    Console.WriteLine("Por favor eliga una tarjeta para continuar");
-                //    foreach (Bip i in tarjetas) {
-                //        Console.WriteLine("Tarjeta: {0} - Id: {1}",i , i.Id);
-                //    }
-                //}
+                Console.WriteLine(" 1: Crear tarjeta \n 2: Elegir tarjeta tarjeta \n 0:Salir");
+                try {
+                    opcTarjeta = int.Parse(Console.ReadLine());
+                } catch (System.FormatException) {
+                    opcTarjeta = -1;
+                }
+
+                switch (opcTarjeta) {
+                    case 0:
+                        opcTarjeta = 0;
+                        opcion = 0;
+                        break;
+                    case 1:
+                        b = Utilidades.CrearTarjeta();
+                        Console.WriteLine("Tarjeta creada exitosamente");
+                        Console.WriteLine("Tarjeta: {0} - Saldo:$ {1}", b.Id, b.Saldo);                         
+                        break;
+                    case 2:                        
+                        Console.WriteLine("Elija la tarjeta que va a usar \n");
+                        Console.WriteLine(Utilidades.ConsultaTarjetas());
+                        try {
+                            eleccionTarjeta = int.Parse(Console.ReadLine());
+                        } catch (System.FormatException) {
+                            eleccionTarjeta = -1;
+                        }
+                        if(eleccionTarjeta > -1 || eleccionTarjeta < Utilidades.ContadorTarjetas) {
+                            b = Utilidades.ElegirTarjeta(eleccionTarjeta);
+                            opcTarjeta = 0;
+                        } else {
+                            Console.WriteLine("Valor ingresado no es valido");
+                        }                        
+                        break;
+                }
+            }
+
+            //Mostramos el bucle de consulta por tarjeta
+            while (opcion != 0) {                
+                Console.WriteLine("---------------------------------------------------");
+                Console.WriteLine("Bienvenido a Bip");
+
                 Console.WriteLine("Que acción quiere realizar \n");
                 Console.WriteLine(" 1: Cosulta saldo \n 2: Recargar \n 3: Pagar pasaje " +
                     "\n 4: Ver id de tarjeta \n 5: Listado de cargas \n 6: Listado de pagos \n 0: Salir");
@@ -77,9 +99,9 @@ namespace ConsoleApp2 {
                         break;
                     case 3:
                         if (b.pagar()) {
-                            Console.WriteLine("\n Pago realizado correctamente");
+                            Console.WriteLine("\n Pago realizado correctamente \n Pasaje: ${0}", Utilidades.CalculoValorPasaje());
                         } else {
-                            Console.WriteLine("\n No tiene saldo suficiente");
+                            Console.WriteLine("\n No tiene saldo suficiente \n Saldo: ${0}", b.Saldo);
                         }
                         break;
                     case 4:
@@ -88,6 +110,7 @@ namespace ConsoleApp2 {
                     case 5:
                         Console.WriteLine("Cargas realizadas");
                         Console.WriteLine(".......................................");
+                        Console.WriteLine("Total: {0}", b.Cargas.Count());
                         foreach (String element in b.Cargas) {                            
                             Console.WriteLine(element);
                         }                        
@@ -95,7 +118,7 @@ namespace ConsoleApp2 {
                     case 6:
                         Console.WriteLine("Pagos realizados");
                         Console.WriteLine(".......................................");
-                        b.MostrarPagos();
+                        Console.WriteLine(b.MostrarPagos());
                         break;
                     default:
                         Console.WriteLine("\n Ingrese una opción valida");
